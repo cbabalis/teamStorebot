@@ -60,6 +60,11 @@ def handle_updates(updates):
             items = db.get_items(chat)
             keyboard = build_keyboard(items)
             send_message("Select an item to delete", chat, keyboard)
+        elif text.startswith("/clear"):
+            db.delete_item("*", chat)
+            items = db.get_items(chat)
+            keyboard = build_keyboard(items)
+            send_message("Select an item to delete", chat, keyboard)
         else:
             continue
 

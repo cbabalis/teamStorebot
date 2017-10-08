@@ -22,7 +22,6 @@ class DBHelper:
         self.conn.commit()
 
     def delete_item(self, item_text, owner):
-        #TODO have a url in item, which the user follows it just before leaving
         stmt = "DELETE FROM items WHERE description = (?) AND owner = (?)"
         args = (item_text, owner)
         self.conn.execute(stmt, args)
@@ -32,3 +31,10 @@ class DBHelper:
         stmt = "SELECT description FROM items WHERE owner = (?)"
         args = (owner, )
         return [x[0] for x in self.conn.execute(stmt, args)]
+
+    def clear_list(self, owner):
+        stmt = "DELETE FROM items WHERE description = (?) AND owner = (?)"
+        args = ('*', owner)
+        self.conn.execute(stmt, args)
+        self.conn.commit()
+

@@ -43,10 +43,16 @@ def handle_updates(updates):
             keyboard = build_keyboard(items)
             send_message("Select an item to delete", chat, keyboard)
         elif text == "/start":
-            send_message("Welcome to your personal To Do list. Send any text to me and I'll store it as an item. Send /done to remove items", chat)
-        elif text.startswith("/"):
-            continue
-        elif text in items:
+            send_message("Welcome to your personal To Do list. Send any text to me and I'll store it as an item. Send /pop to remove items", chat)
+        elif text.startswith("/add"):
+            text = text.replace("/add", '')
+            if not text:
+                send_message("Please write something to add after \"add\" statement!", chat)
+            else:
+                db.add_item(text, chat)
+                items = db.get_items(chat)
+                message = "\n".join(items)
+        elif text.startswith("/pop"):
             # first, echo the message (in case of a link, for example)
             # and then delete it
             send_message(text, chat)
@@ -55,10 +61,7 @@ def handle_updates(updates):
             keyboard = build_keyboard(items)
             send_message("Select an item to delete", chat, keyboard)
         else:
-            db.add_item(text, chat)
-            items = db.get_items(chat)
-            message = "\n".join(items)
-            send_message(message, chat)
+            continue
 
 def build_keyboard(items):
     keyboard = [[item] for item in items]

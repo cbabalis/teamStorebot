@@ -54,7 +54,6 @@ def delete_item(bot, update):
         update.message.reply_text("No other items to return! Please add some")
     else:
         item_to_delete = update.message.text.split("/pop ")[-1]
-        pdb.set_trace()
         if item_to_delete not in items:
             item_to_do = items.pop()
             update.message.reply_text(item_to_do)
@@ -87,7 +86,7 @@ def main():
     dp.add_handler(CommandHandler("show", show_all))
 
     # on noncommand i.e message - echo the message on Telegram
-    dp.add_handler(MessageHandler(Filters.text, echo))
+    #dp.add_handler(MessageHandler(Filters.text, echo))
 
     # log all errors
     dp.add_error_handler(error)

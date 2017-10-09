@@ -53,14 +53,21 @@ def delete_item(bot, update):
     if not items:
         update.message.reply_text("No other items to return! Please add some")
     else:
-        item_to_do = items.pop()
-        update.message.reply_text(item_to_do)
+        item_to_delete = update.message.text.split("/pop ")[-1]
+        pdb.set_trace()
+        if item_to_delete not in items:
+            item_to_do = items.pop()
+            update.message.reply_text(item_to_do)
+        else:
+            temp_index = items.index(item_to_delete)
+            update.message.reply_text(items.pop(temp_index))
 
 def show_all(bot, update):
     if not items:
         update.message.reply_text("No other items to return! Please add some")
     else:
-        update.message.reply_text(items)
+        all_items = '\n'.join(items)
+        update.message.reply_text(all_items)
 
 
 

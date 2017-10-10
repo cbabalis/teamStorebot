@@ -18,6 +18,8 @@ bot.
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import logging
+import urllib
+from dbhelper import DBHelper
 import pdb
 
 # Enable logging
@@ -26,6 +28,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 logger = logging.getLogger(__name__)
 items = []
+db = DBHelper()
 
 
 # Define a few command handlers. These usually take the two arguments bot and

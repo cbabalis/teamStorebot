@@ -47,16 +47,18 @@ def error(bot, update, error):
 
 def add_item(bot, update):
     item = update.message.text.split("/add ")[-1]
-    items.append(item)
+    user = update.effective_user.username
+    db.add_item(item, user)
 
 def delete_item(bot, update):
     if not items:
         update.message.reply_text("No other items to return! Please add some")
     else:
         item_to_delete = update.message.text.split("/pop ")[-1]
-        if item_to_delete not in items:
-            item_to_do = items.pop()
+        if db.get_item(item_to_delete):
+            item_to_do = db.get_item(item_to_delete)
             update.message.reply_text(item_to_do)
+            db.delete_item(item_to_delete)
         else:
             temp_index = items.index(item_to_delete)
             update.message.reply_text(items.pop(temp_index))

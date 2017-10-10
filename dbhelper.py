@@ -21,11 +21,17 @@ class DBHelper:
         self.conn.execute(stmt, args)
         self.conn.commit()
 
-    def delete_item(self, item_text, owner):
-        stmt = "DELETE FROM items WHERE description = (?) AND owner = (?)"
-        args = (item_text, owner)
+    def delete_item(self, item_text):
+        stmt = "DELETE FROM items WHERE description = (?)"
+        args = (item_text, )
         self.conn.execute(stmt, args)
         self.conn.commit()
+
+    def get_item(self, item_text):
+        stmt = "SELECT description FROM items WHERE descprition = (?)"
+        args = (item_text, )
+        self.conn.execute(stmt, args)
+        return self.conn.execute(stmt, args)
 
     def get_items(self, owner):
         stmt = "SELECT description FROM items WHERE owner = (?)"

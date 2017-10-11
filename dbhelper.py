@@ -21,9 +21,9 @@ class DBHelper:
         self.conn.execute(stmt, args)
         self.conn.commit()
 
-    def delete_item(self, item_text):
-        stmt = "DELETE FROM items WHERE description = (?)"
-        args = (item_text, )
+    def delete_item(self, item_text, owner):
+        stmt = "DELETE FROM items WHERE description = (?) AND owner = (?)"
+        args = (item_text, owner)
         self.conn.execute(stmt, args)
         self.conn.commit()
 
@@ -37,3 +37,10 @@ class DBHelper:
         stmt = "SELECT description FROM items WHERE owner = (?)"
         args = (owner, )
         return [x[0] for x in self.conn.execute(stmt, args)]
+
+    def pop_one_item(self, owner):
+        stmt = "SELECT * FROM items WHERE owner = (?) LIMIT 1"
+        args = (owner, )
+        item = self.conn.execute(stmt, args)
+        self.delete_item(item, owner)
+        return item

@@ -79,6 +79,7 @@ def show_all(bot, update):
 
 
 def main():
+    db.setup()
     # Create the EventHandler and pass it your bot's token.
     TOKEN = "447204684:AAG8quYI85IFn-hsY-iWt2wtsTQCKcD77a8"
     updater = Updater(TOKEN)
